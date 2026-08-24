@@ -1,0 +1,9 @@
+#!name=出口 IP 查询
+#!desc=在插件页运行，查询当前节点出口 IP / ISP / 地区
+#!openUrl=https://github.com/Loon0x00/LoonExampleConfig
+#!author=Loon0x00
+#!homepage=https://github.com/Loon0x00/LoonExampleConfig
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png
+
+[Script]
+generic script-path=https://raw.githubusercontent.com/Loon0x00/LoonExampleConfig/master/Script/generic_example.js,tag=出口IP,timeout=10,img-url=location.fill.viewfinder.system

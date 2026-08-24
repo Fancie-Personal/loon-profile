@@ -1,0 +1,13 @@
+# Personal DIRECT overrides. Keep this list small.
+DOMAIN,e.crashlytics.com
+DOMAIN,e.crashlynatics.com
+DOMAIN,captive.apple.com
+DOMAIN,www.apple.com
+DOMAIN-SUFFIX,apple-dns.net
+DOMAIN-SUFFIX,push.apple.com
+DOMAIN,connectivitycheck.platform.hicloud.com
+DOMAIN,wifi.vivo.com.cn
+DOMAIN,www.msftconnecttest.com
+DOMAIN,ipv6.msftconnecttest.com
+DOMAIN,www.msftncsi.com
+DOMAIN-KEYWORD,stun

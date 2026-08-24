@@ -1,0 +1,6 @@
+# Tailscale / CGNAT — keep off TUN and out of proxy
+DOMAIN-SUFFIX,ts.net
+DOMAIN-SUFFIX,tailscale.com
+IP-CIDR,100.64.0.0/10,no-resolve
+PROCESS-NAME,Tailscale
+PROCESS-NAME,IPNExtension

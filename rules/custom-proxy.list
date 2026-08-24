@@ -1,0 +1,12 @@
+# Personal PROXY overrides (domains that GEOIP/China would otherwise DIRECT).
+# Add one rule per line, no policy column — the Remote Rule policy applies.
+# Example:
+# DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,cursor.sh
+DOMAIN-SUFFIX,cursor.com
+DOMAIN-SUFFIX,cursorapi.com
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,googleapis.com
+DOMAIN-SUFFIX,gstatic.com
+DOMAIN-SUFFIX,googleusercontent.com

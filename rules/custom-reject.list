@@ -1,0 +1,2 @@
+# Extra REJECT hosts. Prefer the Advertising remote list for bulk ads.
+# DOMAIN-SUFFIX,ads.example.com
