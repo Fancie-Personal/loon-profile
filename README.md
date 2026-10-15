@@ -30,12 +30,10 @@ https://gh-proxy.com/https://gist.githubusercontent.com/Fancie-Personal/916675be
 导入前先关掉状态栏 VPN / 当前 Loon 隧道，否则容易出现「配置文件下载失败」。
 如果 Loon 报「empty configuration file / 文件为空」，通常是地址取到空内容或 404，不是配置本身的问题；先确认用的是上面没有嵌套 scheme 的直连地址。
 
-### 离线导入（完全不依赖网络）
+### 离线导入（可选，不依赖网络）
 
-`publish.sh` 会同时把配置复制到 iCloud 云盘：`iCloud 云盘/Loon/Loon.conf`。
-
-- iPhone / iPad：文件 App → iCloud 云盘 → `Loon` → `Loon.conf`，然后在 Loon → 配置 → `+` → 从文件导入。
-- 或者从 Mac 用 AirDrop 把 `Loon.conf` 发到手机，再用 Loon 打开。
+从 Mac 用 AirDrop 把 `Loon.conf` 发到手机，然后在 Loon → 配置 → `+` → 从文件导入。
+这种是本地副本，列表里没有「更新」菜单，不会跟着 URL 走；日常请用上面的远程配置。
 
 ### 一键导入链接
 
@@ -104,7 +102,7 @@ https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 - 仓库是私有的，匿名 raw / jsDelivr 全部 404；设备订阅地址改为 secret gist 镜像（`916675be…`），内容与 `Loon.conf` 一致。
 - 清理 `[Rule]` 中重复的 Tailscale / PROCESS-NAME / GEOIP 行（上次内联个人规则时残留），现在 `FINAL` 只有一条。
 - 新增 `publish.sh`：一条命令完成提交、推送、刷新 Gist。
-- 三个地址实测返回同一份完整配置（9661 字节）：gist 直连、ghfast.top、gh-proxy.com。
+- 三个地址实测返回同一份完整配置：gist 直连、cdn.statically.io、ghfast.top。
 
 ### 2026-10-15 DNS 与分流优化
 

@@ -33,10 +33,3 @@ Device subscription URL:
   https://cdn.statically.io/gist/Fancie-Personal/$gist_id/raw/Loon.conf
 EOF
 
-# Offline import copy: Loon -> 配置 -> + -> 从文件导入 on iPhone / iPad.
-icloud_dir="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Loon"
-if [ -d "$HOME/Library/Mobile Documents/com~apple~CloudDocs" ]; then
-  mkdir -p "$icloud_dir"
-  cp Loon.conf "$icloud_dir/Loon.conf"
-  echo "iCloud Drive copy: $icloud_dir/Loon.conf"
-fi
