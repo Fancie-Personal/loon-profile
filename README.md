@@ -90,12 +90,20 @@ https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 
 局域网、Tailscale、Apple / Microsoft 连通性检测走直连；`Auto` 只收录带地区名的节点，不会把 Traffic / Expire 这类信息节点拿去测速。
 
+`HK` / `TW` / `SG` / `JP` / `KR` / `US` 每个地区组的第一项都是「自动选择」（`HK_Auto`、`US_Auto` 等，`url-test`，每 600 秒测速、`tolerance = 100`），在该地区内自动挑延迟最低的节点；后面跟着该地区的完整节点列表，想固定用某个节点时手动选它就行。
+
 ## 插件
 
 - **去广告 Lite**：rewrite 级广告拦截（可选 MitM）
 - **订阅解析器**：Sub-Store parser，方便机场订阅转 Loon
 
 ## 变更记录
+
+### 2026-10-16 地区分组支持自动选择
+
+- `HK` / `TW` / `SG` / `JP` / `KR` / `US` 组的第一项改为地区自动组（`HK_Auto` 等，`url-test` + 地区过滤器，`interval = 600`、`tolerance = 100`）。
+- 地区组同时保留该地区全部节点（过滤器），仍可手动固定某个节点；全局 `Auto`（`fallback` + `ALL_Filter`）不变。
+- Mac 本机配置 `default.lcf` 同步做了同样调整，需要重新加载配置后生效。
 
 ### 2026-10-16 iOS / iPadOS 同步
 
