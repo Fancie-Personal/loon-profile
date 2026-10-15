@@ -46,6 +46,7 @@ https://gh-proxy.com/https://gist.githubusercontent.com/Fancie-Personal/916675be
 ### 每台设备只做一次
 
 1. **节点订阅**：配置里 `[Remote Proxy]` 是空的，用原来的机场 / 自建节点链接添加；订阅 token 只留在本机。
+   推荐在 Loon → 配置 → 节点 / 订阅里添加，而不是把订阅行粘进配置文本：远程配置更新时会整段覆盖，粘在文本里的订阅会被冲掉。
 2. **策略组**：在 `Proxy` / `Auto` / `AI` / `YouTube` 等组里选好节点，`AI` 组建议选美国或日本。
 3. **MitM**：只有需要「去广告 Lite」做 HTTPS 解密时才安装并信任 Loon CA；只靠域名拦截可以不装。
 4. **DNS**：与 Mac 保持一致 —— 使用 DoH，并关闭「查询回落」（Loon 设置 → DNS）。不关的话，加密 DNS 失败时会退回明文查询。
