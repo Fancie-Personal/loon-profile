@@ -8,31 +8,40 @@
 GitHub 对私有仓库的匿名地址（`raw.githubusercontent.com`、jsDelivr）一律返回 404，所以手机端订阅的是本配置的 **Gist 镜像**。
 secret gist 不能被搜索或列在个人主页上，只有拿到链接才能下载，内容与仓库 `Loon.conf` 完全一致，且不含任何节点密钥。
 
-### 一键导入（在 iPhone / iPad 上点开）
+### 手动导入（推荐路径）
 
-| 网络环境 | 链接 |
-| --- | --- |
-| 国内网络（推荐） | `https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fghfast.top%2Fhttps%3A%2F%2Fgist.githubusercontent.com%2FFancie-Personal%2F916675be5dbf03d0d9128e1e4c14c67a%2Fraw%2FLoon.conf` |
-| 可直连 GitHub | `https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fgist.githubusercontent.com%2FFancie-Personal%2F916675be5dbf03d0d9128e1e4c14c67a%2Fraw%2FLoon.conf` |
-
-点开后 Loon 会弹出导入，确认后保存为远程配置（建议命名 `loon-profile`）。
-
-### 手动导入
-
-Loon → 配置 → 右上角 `+` → 从 URL 下载，粘贴下面任意一条：
+Loon → 配置 → 右上角 `+` → 从 URL 下载，粘贴下面这条（地址里没有嵌套的 `https://`，客户端兼容性最好）：
 
 ```
-# 国内网络优先（GitHub 代理镜像）
-https://ghfast.top/https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
-
-# 备用镜像
-https://gh-proxy.com/https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
-
-# 直连（境外网络或已能访问 GitHub 时）
 https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
 ```
 
+取不到内容时按顺序换备用地址：
+
+```
+# CDN 镜像（同样不含嵌套 scheme）
+https://cdn.statically.io/gist/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+
+# GitHub 代理镜像：URL 里嵌套了 https://，个别客户端会把路径里的 // 归一化，取到空内容就换上面的地址
+https://ghfast.top/https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+https://gh-proxy.com/https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+```
+
 导入前先关掉状态栏 VPN / 当前 Loon 隧道，否则容易出现「配置文件下载失败」。
+如果 Loon 报「empty configuration file / 文件为空」，通常是地址取到空内容或 404，不是配置本身的问题；先确认用的是上面没有嵌套 scheme 的直连地址。
+
+### 离线导入（完全不依赖网络）
+
+`publish.sh` 会同时把配置复制到 iCloud 云盘：`iCloud 云盘/Loon/Loon.conf`。
+
+- iPhone / iPad：文件 App → iCloud 云盘 → `Loon` → `Loon.conf`，然后在 Loon → 配置 → `+` → 从文件导入。
+- 或者从 Mac 用 AirDrop 把 `Loon.conf` 发到手机，再用 Loon 打开。
+
+### 一键导入链接
+
+在 Safari（不要用微信 / QQ 内置浏览器，query 可能被丢掉）里打开：
+
+`https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fgist.githubusercontent.com%2FFancie-Personal%2F916675be5dbf03d0d9128e1e4c14c67a%2Fraw%2FLoon.conf`
 
 ### 每台设备只做一次
 
