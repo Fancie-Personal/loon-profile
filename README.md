@@ -5,30 +5,32 @@
 
 ## 同步到 iOS / iPadOS
 
-GitHub 对私有仓库的匿名地址（`raw.githubusercontent.com`、jsDelivr）一律返回 404，所以手机端订阅的是本配置的 **Gist 镜像**。
-secret gist 不能被搜索或列在个人主页上，只有拿到链接才能下载，内容与仓库 `Loon.conf` 完全一致，且不含任何节点密钥。
+仓库已设为 public，手机端直接订阅 jsDelivr —— 国内可直连，不需要任何镜像。
+跟踪的文件和历史提交里都没有订阅 token（`[Remote Proxy]` 是空的），机场订阅只留在设备本地。
 
 ### 手动导入（推荐路径）
 
-Loon → 配置 → 右上角 `+` → 从 URL 下载，粘贴下面这条（地址里没有嵌套的 `https://`，客户端兼容性最好）：
+Loon → 配置 → 右上角 `+` → 从 URL 下载，粘贴：
 
 ```
-https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 ```
 
 取不到内容时按顺序换备用地址：
 
 ```
-# CDN 镜像（同样不含嵌套 scheme）
-https://cdn.statically.io/gist/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+# jsDelivr 备用线路
+https://fastly.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 
-# GitHub 代理镜像：URL 里嵌套了 https://，个别客户端会把路径里的 // 归一化，取到空内容就换上面的地址
-https://ghfast.top/https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
-https://gh-proxy.com/https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+# Gist 镜像
+https://gist.githubusercontent.com/Fancie-Personal/916675be5dbf03d0d9128e1e4c14c67a/raw/Loon.conf
+
+# GitHub 代理镜像
+https://ghfast.top/https://raw.githubusercontent.com/Fancie-Personal/loon-profile/main/Loon.conf
 ```
 
 导入前先关掉状态栏 VPN / 当前 Loon 隧道，否则容易出现「配置文件下载失败」。
-如果 Loon 报「empty configuration file / 文件为空」，通常是地址取到空内容或 404，不是配置本身的问题；先确认用的是上面没有嵌套 scheme 的直连地址。
+Loon 只给「从 URL 下载」来的配置显示「更新」；从文件导入、复制出来的本地副本没有这一项，只能重新导入。
 
 ### 离线导入（可选，不依赖网络）
 
@@ -38,6 +40,10 @@ https://gh-proxy.com/https://gist.githubusercontent.com/Fancie-Personal/916675be
 ### 一键导入链接
 
 在 Safari（不要用微信 / QQ 内置浏览器，query 可能被丢掉）里打开：
+
+`https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FFancie-Personal%2Floon-profile%40main%2FLoon.conf`
+
+备用（Gist 镜像）：
 
 `https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fgist.githubusercontent.com%2FFancie-Personal%2F916675be5dbf03d0d9128e1e4c14c67a%2Fraw%2FLoon.conf`
 
@@ -60,18 +66,11 @@ Mac 版 Loon 不参与这套 iCloud 容器，所以 Mac ↔ 手机之间用上�
 cd ~/loon-profile && ./publish.sh
 ```
 
-脚本会提交并推送仓库，同时刷新 Gist。然后回到设备的 Loon → 配置 → 该配置右侧「更新」（或等自动更新）。
-Gist ID 存在 `.gist-id`（已 gitignore）；万一要换 Gist，改这个文件即可。
+脚本会提交并推送仓库、调用 jsDelivr 的缓存刷新接口，并同步 Gist 备份和 iCloud 副本。
+然后回到设备的 Loon → 配置 → 该配置右侧「更新」（或等自动更新）。
 
-### 想换成 jsDelivr（可选）
-
-jsDelivr 只服务公开仓库。仓库里没有任何密钥，如果更想要国内更快的 jsDelivr，把仓库设为 public 即可：
-
-```
-https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
-```
-
-是否公开由你决定；当前「私有仓库 + Gist 镜像」已经能正常同步。
+jsDelivr 对分支引用有缓存，脚本里的刷新调用通常几秒内生效；没生效就等几分钟，或把地址换成 `fastly.jsdelivr.net`。
+Gist ID 存在 `.gist-id`（已 gitignore），作为备用订阅地址保留。
 
 ## 日常改什么
 
@@ -100,6 +99,12 @@ https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 - **订阅解析器**：Sub-Store parser，方便机场订阅转 Loon
 
 ## 变更记录
+
+### 2026-10-16 改为公开仓库 + jsDelivr 订阅
+
+- 仓库从 private 改为 public（切换前确认过跟踪文件和全部历史提交里没有订阅 token），设备订阅地址改为 `https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf`，国内可直连。
+- `publish.sh` 增加 jsDelivr 缓存刷新调用，继续同步 Gist 备份和 iCloud 副本；Gist、ghfast.top、raw 保留为备用地址。
+- 之前私有仓库时期的 Gist 方案仍然可用，但不再是主路径。
 
 ### 2026-10-16 地区分组支持自动选择
 
