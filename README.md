@@ -92,6 +92,8 @@ https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 
 `HK` / `TW` / `SG` / `JP` / `KR` / `US` 每个地区组的第一项都是「自动选择」（`HK_Auto`、`US_Auto` 等，`url-test`，每 600 秒测速、`tolerance = 100`），在该地区内自动挑延迟最低的节点；后面跟着该地区的完整节点列表，想固定用某个节点时手动选它就行。
 
+`其他国家` 收的是不匹配上面六个地区的节点（欧洲、中东等，过滤器 `OTHER_Filter`），同样第一项是自动选择 `其他国家_Auto`，并已加入 `Proxy` 的可选列表；订阅里 `Traffic` / `Expire` / 流量 / 到期 这类信息行会被过滤掉。
+
 ## 插件
 
 - **去广告 Lite**：rewrite 级广告拦截（可选 MitM）
@@ -104,6 +106,12 @@ https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf
 - `HK` / `TW` / `SG` / `JP` / `KR` / `US` 组的第一项改为地区自动组（`HK_Auto` 等，`url-test` + 地区过滤器，`interval = 600`、`tolerance = 100`）。
 - 地区组同时保留该地区全部节点（过滤器），仍可手动固定某个节点；全局 `Auto`（`fallback` + `ALL_Filter`）不变。
 - Mac 本机配置 `default.lcf` 同步做了同样调整，需要重新加载配置后生效。
+
+### 2026-10-16 新增「其他国家」分组
+
+- 新增过滤器 `OTHER_Filter`：只收不匹配港 / 台 / 日 / 韩 / 新 / 美关键词的节点，并排除 `Traffic`、`Expire`、流量、到期等信息行（Mac 本机配置用自己的地区关键词做排除）。
+- 新增 `其他国家`（`select`，首项为自动）和 `其他国家_Auto`（`url-test`，`interval = 600`、`tolerance = 100`）两个组，并把 `其他国家` 加进 `Proxy` 的可选列表。
+- Mac 本机配置同步更新，重新加载配置后生效。
 
 ### 2026-10-16 iOS / iPadOS 同步
 
