@@ -3,6 +3,26 @@
 在 Mac 上编辑一份 `Loon.conf`，iPhone / iPad / Apple TV 订阅同一份，改完跑一次脚本即可全设备更新。
 节点订阅密钥不进这个仓库：配置里 `[Remote Proxy]` 是空的，每台设备自己补。
 
+## 更新到 2026-10-21 DNS 配置（先设置，再更新）
+
+默认 DNS 改为 Cloudflare / Google DoH，经 `Proxy` 查询；现有国内域名 Host 映射继续使用国内 DoH。
+Mac 已在 Net.Coffee 复测显示 Google DNS / 未检测到泄露；手机仍需逐台验证。
+
+更新前，每台设备先完成以下设置：
+
+1. 使用 Loon **3.5.2（996）或以上版本**（Mac 为 0.5.0 / 1009）。
+2. 在「节点 → 订阅」编辑自己的机场订阅，将**节点服务器 DNS**设为 `https://223.5.5.5/dns-query`。对应配置参数是 `server-dns="https://223.5.5.5/dns-query"`；只在本机订阅设置，不要把订阅 URL 粘进本仓库。它只解析节点服务器域名，不用于普通网页域名。
+3. DNS 设置：**DoH 流量模式 = Rule**；**包含系统 DNS = 关闭**；**查询回落 = 关闭**。
+4. 更新远程配置并「应用」，重新连接 Loon，再运行 DNS 检测。即使当前能连接，也要重连一次验证节点的启动解析。
+
+若订阅编辑界面没有独立 DNS 选项，可在本机 Host 映射中把实际节点服务器域名指定到 `server:https://223.5.5.5/dns-query`，与 Mac 的私有启动映射作用相同；机场更换服务器域名后需同步维护。未设置独立启动解析前，不要切换到这份境外默认 DNS 配置，否则可能出现 DNS 与代理相互等待。
+
+这些 App 设置和私人节点订阅不会由公共 `Loon.conf` 自动下发。不要把 Mac 的 `default.lcf` 上传到仓库。
+
+若更新后无法联网：先断开 Loon，在本机把默认 DoH 恢复成 `https://223.5.5.5/dns-query,https://doh.pub/dns-query`，DoH 流量模式恢复 DIRECT，再重连排查；不要通过打开明文 DNS 回落来绕过问题。
+
+官方说明：[节点 DNS](https://nsloon.app/docs/Node/)、[订阅 server-dns](https://nsloon.app/docs/Node/subscription)。检测页的解析器地区不等于物理网卡抓包结论，本次仍未完成全设备零泄漏验收。
+
 ## 同步到 iOS / iPadOS
 
 仓库已设为 public，手机端直接订阅 jsDelivr —— 国内可直连，不需要任何镜像。
@@ -53,7 +73,7 @@ Loon 只给「从 URL 下载」来的配置显示「更新」；从文件导入�
    推荐在 Loon → 配置 → 节点 / 订阅里添加，而不是把订阅行粘进配置文本：远程配置更新时会整段覆盖，粘在文本里的订阅会被冲掉。
 2. **策略组**：在 `Proxy` / `Auto` / `AI` / `YouTube` 等组里选好节点，`AI` 组建议选美国或日本。
 3. **MitM**：只有需要「去广告 Lite」做 HTTPS 解密时才安装并信任 Loon CA；只靠域名拦截可以不装。
-4. **DNS**：与 Mac 保持一致 —— 使用 DoH，并关闭「查询回落」（Loon 设置 → DNS）。不关的话，加密 DNS 失败时会退回明文查询。
+4. **DNS**：按上面的 2026-10-21 设置完成订阅节点独立 DNS、DoH Rule 模式，并关闭系统 DNS 与查询回落，再应用配置。
 5. **资源更新**：远程规则 / 插件开定时更新，每天一次即可。
 
 iPhone 与 iPad 之间还可以另外打开 Loon 自带的 iCloud 同步（同一 Apple ID）。
@@ -99,6 +119,13 @@ Gist ID 存在 `.gist-id`（已 gitignore），作为备用订阅地址保留。
 - **订阅解析器**：Sub-Store parser，方便机场订阅转 Loon
 
 ## 变更记录
+
+### 2026-10-21 默认 DNS 经代理查询
+
+- 默认 DoH 改为 Cloudflare / Google，增加两个 `/32` 本地代理规则。
+- 保留国内域名的加密 DNS 映射和原有策略组。
+- 节点启动解析由设备内 `server-dns` 或私有 Host 映射承担，私人订阅和节点地址不发布。
+
 
 ### 2026-10-16 改为公开仓库 + jsDelivr 订阅
 
