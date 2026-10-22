@@ -10,3 +10,7 @@ DOMAIN,wifi.vivo.com.cn
 DOMAIN,www.msftconnecttest.com
 DOMAIN,ipv6.msftconnecttest.com
 DOMAIN,www.msftncsi.com
+
+# Miyoushe mainland services
+DOMAIN-SUFFIX,mihoyo.com
+DOMAIN-SUFFIX,miyoushe.com
