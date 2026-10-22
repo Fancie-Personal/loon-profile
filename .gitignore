@@ -2,3 +2,4 @@
 private/
 *.lcf.bak
 .gist-id
+__pycache__/

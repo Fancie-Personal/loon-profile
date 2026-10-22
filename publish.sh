@@ -10,18 +10,20 @@ GIST_ID_FILE=".gist-id"
 GIST_DESC="Loon profile (Fancie): DNS leak protection + tuned routing"
 JSDELIVR_URL="https://cdn.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf"
 
-git add Loon.conf README.md rules plugins publish.sh .gitignore 2>/dev/null || true
+git add Loon.conf README.md rules plugins scripts publish.sh .gitignore 2>/dev/null || true
 if ! git diff --cached --quiet; then
   git commit -m "Update Loon config ($(date +%Y-%m-%d))"
 fi
 git push origin HEAD
 
 # jsDelivr caches branch refs, so purge it to get the new revision out quickly.
-if curl -sSf -m 30 "https://purge.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/Loon.conf" >/dev/null; then
-  echo "jsDelivr cache purged"
-else
-  echo "jsDelivr purge failed (the cache expires by itself)"
-fi
+for resource in Loon.conf plugins/domestic-dns.plugin; do
+  if curl -sSf -m 30 "https://purge.jsdelivr.net/gh/Fancie-Personal/loon-profile@main/$resource" >/dev/null; then
+    echo "jsDelivr cache purged: $resource"
+  else
+    echo "jsDelivr purge failed: $resource (the cache expires by itself)"
+  fi
+done
 
 if [ -f "$GIST_ID_FILE" ]; then
   gist_id="$(cat "$GIST_ID_FILE")"
