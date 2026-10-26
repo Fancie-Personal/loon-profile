@@ -3,11 +3,11 @@
 在 Mac 上编辑一份 `Loon.conf`，iPhone / iPad / Apple TV 订阅同一份，改完跑一次脚本即可全设备更新。
 节点订阅密钥不进这个仓库：配置里 `[Remote Proxy]` 是空的，每台设备自己补。
 
-## 更新到 2026-10-22 DNS 分流配置（先设置，再更新）
+## 更新到 2026-10-26 DNS 分流配置（先设置，再更新）
 
 默认 DNS 使用 Cloudflare / Google DoH，经 `Proxy` 查询；`plugins/domestic-dns.plugin` 将国内直连列表中的域名、`.cn` 及 Apple 服务域名交给阿里 DoH，并明确让其服务器直连。国内域名覆盖来自当前使用的 blackmatrix7 China 域名集，不再仅靠少量手写 Host 例外，避免国内 CDN 也使用境外解析。
 
-手机曾记录 App Store 下载域名使用 Cloudflare DNS，单次解析达到 516 ms。新增映射用于消除这条境外 DNS 路径；实际改善仍应以设备 DNS 和请求记录为准。手写 Host 映射继续保留，国内服务仍可能使用腾讯 DoH。
+手机曾记录 App Store 下载域名使用 Cloudflare DNS，单次解析达到 516 ms。新增映射用于消除这条境外 DNS 路径；实际改善仍应以设备 DNS 和请求记录为准。手写 Host 映射也统一使用阿里 DoH，B 站、QQ 等不再单独使用腾讯 DoH；该设置已纳入公共配置，原地更新后不会恢复旧映射。中国移动蜂窝网络的对照使用反馈为访问恢复正常，不代表所有网络下腾讯 DNS 均有故障。
 
 刷新国内 DNS 域名快照：`python3 scripts/update-domestic-dns.py`，然后执行 `./publish.sh`。插件只包含 DNS 映射，不修改节点、证书或 HTTPDNS 拦截规则。国内域名按设计使用国内加密 DNS，因此检测页面显示国内解析器不等于出现明文 DNS 泄漏。
 
